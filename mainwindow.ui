@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>918</width>
-    <height>617</height>
+    <width>1029</width>
+    <height>655</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -970,17 +970,18 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>918</width>
+     <width>1029</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="defaultUp">
+    <bool>false</bool>
    </property>
    <widget class="QMenu" name="menu_F">
     <property name="title">
      <string>文件(&amp;F)</string>
     </property>
     <addaction name="action_Connect"/>
-    <addaction name="action_Restart"/>
-    <addaction name="separator"/>
     <addaction name="action_Off"/>
    </widget>
    <widget class="QMenu" name="menu_S">
@@ -1011,6 +1012,9 @@
    <addaction name="menu_A"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
+   <property name="movable">
+    <bool>false</bool>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -1018,7 +1022,6 @@
     <bool>false</bool>
    </attribute>
    <addaction name="action_Connect"/>
-   <addaction name="action_Restart"/>
    <addaction name="action_Off"/>
    <addaction name="separator"/>
    <addaction name="action_SetParam"/>
@@ -1068,24 +1071,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+K, Ctrl+D</string>
-   </property>
-  </action>
-  <action name="action_Restart">
-   <property name="icon">
-    <iconset resource="resource.qrc">
-     <normaloff>:/new/image/res/restart.png</normaloff>:/new/image/res/restart.png</iconset>
-   </property>
-   <property name="text">
-    <string>重新连接(&amp;R)\tCtrl+K,Ctrl+R</string>
-   </property>
-   <property name="toolTip">
-    <string>重新连接</string>
-   </property>
-   <property name="statusTip">
-    <string>重新连接</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+K, Ctrl+R</string>
    </property>
   </action>
   <action name="action_SetParam">

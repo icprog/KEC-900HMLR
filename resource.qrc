@@ -2,7 +2,6 @@
     <qresource prefix="/new/image">
         <file>res/off.png</file>
         <file>res/on.png</file>
-        <file>res/restart.png</file>
         <file>res/setparam.png</file>
         <file>res/start.png</file>
         <file>res/stop.png</file>

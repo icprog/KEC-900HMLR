@@ -6,6 +6,7 @@
 
 QT       += core gui
 QT       += sql
+QT       += serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -27,13 +28,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         mainwindow.cpp \
     mydatabase.cpp \
-    AfCd_Win32.cpp
+    AfCd_Win32.cpp \
+    myserialport.cpp \
+    dlgcomset.cpp
 
 HEADERS  += mainwindow.h \
     mydatabase.h \
-    AfCd.h
+    AfCd.h \
+    myserialport.h \
+    dlgcomset.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    dlgcomset.ui
 
 RESOURCES += \
     resource.qrc

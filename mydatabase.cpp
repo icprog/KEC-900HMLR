@@ -9,15 +9,26 @@
 MyDataBase::MyDataBase(QObject *parent) : QObject(parent)
 {
     m_bConnect = false;
+
+    //连接数据库并创建表
+    ConnectDB();
 }
 
-bool MyDataBase::ConnectDB()
+MyDataBase::~MyDataBase()
 {
+    CloseDB();
+}
+
+void MyDataBase::ConnectDB()
+{
+    if (m_bConnect) {//已经连接数据库，返回true
+        return;
+    }
     QSqlDatabase db = QSqlDatabase::addDatabase(tr("QSQLITE"));
     db.setDatabaseName(tr("Data.db"));
     if (!db.open()) {//打开数据库文件
         QMessageBox::critical(0,tr("数据库错误"),db.lastError().text());
-        return false;
+        return;
     }
     //数据库连接成功
     m_bConnect = true;
@@ -33,13 +44,22 @@ bool MyDataBase::ConnectDB()
     //成功后提交事务
     CommitTransaction();
 
-    return true;
+    return;
 }
 
-void MyDataBase::CloseDB()
+bool MyDataBase::IsConnectDB()
 {
-    CommitTransaction();//关闭前提交事务
-    QSqlDatabase::database().close();
+    return m_bConnect;
+}
+
+void MyDataBase::BeginTransaction()
+{
+    QSqlDatabase::database().transaction();
+}
+
+void MyDataBase::CommitTransaction()
+{
+    QSqlDatabase::database().commit();
 }
 
 bool MyDataBase::CreateTable()
@@ -60,12 +80,10 @@ bool MyDataBase::CreateTable()
     }
 }
 
-void MyDataBase::BeginTransaction()
+void MyDataBase::CloseDB()
 {
-    QSqlDatabase::database().transaction();
+    CommitTransaction();//关闭前提交事务
+    QSqlDatabase::database().close();
+    m_bConnect = false;
 }
 
-void MyDataBase::CommitTransaction()
-{
-    QSqlDatabase::database().commit();
-}

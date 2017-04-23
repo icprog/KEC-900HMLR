@@ -8,17 +8,21 @@ class MyDataBase : public QObject
     Q_OBJECT
 public:
     explicit MyDataBase(QObject *parent = 0);
+    ~MyDataBase();
 
 public:
-    bool ConnectDB();
-    void CloseDB();
-    bool CreateTable();
-    void BeginTransaction();
-    void CommitTransaction();
+    bool IsConnectDB();
 
 signals:
 
 public slots:
+    void BeginTransaction();
+    void CommitTransaction();
+
+protected:
+    void ConnectDB();
+    bool CreateTable();
+    void CloseDB();
 
 private:
     bool m_bConnect;
