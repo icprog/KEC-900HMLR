@@ -16,15 +16,16 @@ public:
 public:
     bool OpenSerial();
     void CloseSerial();
+    void ClearSerial();
     bool isOpen();
-    qint64 SendBuf(QString str);
     void ReceiveBuf();
 
 signals:
-    void Resolve(QString& strRev);//解析数据信号
+    void Resolve(QByteArray buf);//解析数据信号
 
 public slots:
     void SetConfig(QString Port,qint32 Baud);
+    void SendBuf(char* buf,qint64 len);
 
 private:
     QString strPort;

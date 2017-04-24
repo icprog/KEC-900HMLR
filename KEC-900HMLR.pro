@@ -30,13 +30,15 @@ SOURCES += main.cpp\
     mydatabase.cpp \
     AfCd_Win32.cpp \
     myserialport.cpp \
-    dlgcomset.cpp
+    dlgcomset.cpp \
+    mysamplethread.cpp
 
 HEADERS  += mainwindow.h \
     mydatabase.h \
     AfCd.h \
     myserialport.h \
-    dlgcomset.h
+    dlgcomset.h \
+    mysamplethread.h
 
 FORMS    += mainwindow.ui \
     dlgcomset.ui

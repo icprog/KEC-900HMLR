@@ -11,13 +11,11 @@ public:
     ~MyDataBase();
 
 public:
-    bool IsConnectDB();
 
 signals:
 
 public slots:
-    void BeginTransaction();
-    void CommitTransaction();
+    void SaveHistory(QString strTime,float Temp,qint32 Humi,qint32 Ion);
 
 protected:
     void ConnectDB();

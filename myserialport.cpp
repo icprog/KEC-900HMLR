@@ -1,5 +1,7 @@
 #include "myserialport.h"
 #include <QSettings>
+#include <QDebug>
+#include <synchapi.h>
 
 MySerialPort::MySerialPort(QObject *parent) : QObject(parent)
 {
@@ -52,25 +54,36 @@ void MySerialPort::CloseSerial()
     }
 }
 
+void MySerialPort::ClearSerial()
+{
+    //清空缓冲区
+    mySerial->clear();
+}
+
 bool MySerialPort::isOpen()
 {
     return mySerial->isOpen();
 }
 
-qint64 MySerialPort::SendBuf(QString str)
+void MySerialPort::SendBuf(char* buf,qint64 len)
 {
-    return mySerial->write(str.toLatin1());
+    //写命令
+    if (mySerial->write(buf,len) != len) {
+            qDebug() << tr("Write Error");
+    }
+    else {
+        qDebug() << tr("Write Success");
+    }
 }
 
 void MySerialPort::ReceiveBuf()
 {
     QByteArray buf;
-    QString str;
     buf = mySerial->readAll();
     if(!buf.isEmpty())
     {
-        str = tr(buf);
-        emit Resolve(str);
+        emit Resolve(buf);
+        qDebug() << tr("Receive Success");
     }
     buf.clear();
 }

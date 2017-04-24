@@ -64,7 +64,7 @@ void DlgComSet::on_btnOK_clicked()
 
     //发送信号
     emit SetCom(strPort,nBaud);
-//        emit SetInterval(nSampleInterval,nSaveInterval);
+    emit SetInterval(nSampleInterval,nSaveInterval);
 
     //退出对话框
     accept();

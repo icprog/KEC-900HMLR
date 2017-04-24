@@ -33,56 +33,44 @@ void MyDataBase::ConnectDB()
     //数据库连接成功
     m_bConnect = true;
 
-    //启动事务
-    BeginTransaction();
+    QSqlDatabase::database().transaction();
 
     //创建表
     if (!CreateTable()) {
         QMessageBox::critical(0,tr("创建表失败"),QSqlDatabase::database().lastError().text());
     }
 
-    //成功后提交事务
-    CommitTransaction();
-
+    QSqlDatabase::database().commit();
     return;
 }
 
-bool MyDataBase::IsConnectDB()
+void MyDataBase::SaveHistory(QString strTime, float Temp, qint32 Humi, qint32 Ion)
 {
-    return m_bConnect;
-}
-
-void MyDataBase::BeginTransaction()
-{
-    QSqlDatabase::database().transaction();
-}
-
-void MyDataBase::CommitTransaction()
-{
-    QSqlDatabase::database().commit();
+    QSqlQuery query;
+    if (query.prepare(QString("insert into history (time,temp,humi,ion) values(?,?,?,?)"))) {
+        query.addBindValue(strTime);
+        query.addBindValue(Temp);
+        query.addBindValue(Humi);
+        query.addBindValue(Ion);
+        query.exec();
+        QSqlDatabase::database().commit();
+        qDebug() << tr("insert Success");
+    }
+    else {
+        qDebug() << tr("insert Error");
+    }
 }
 
 bool MyDataBase::CreateTable()
 {
     QSqlQuery query;
-    //关键的判断,判断指定表是否存在
-    bool isTableExist = query.exec(QString("select count(*) from sqlite_master where type='table' and name='%1'").arg(tr("Data.db")));
-    if(isTableExist)
-    {
-        qDebug() << "表已存在";
-        return true;
-    }
-    else
-    {
-        qDebug() << "表不存在";
-        //创建表
-        return query.exec(QString("create table history (time varchar(14) primary key,temp float,humi float,ion float)"));
-    }
+    //创建表
+    return query.exec(QString("create table if not exists history (time varchar(14) primary key,temp float,humi int,ion int)"));
 }
 
 void MyDataBase::CloseDB()
 {
-    CommitTransaction();//关闭前提交事务
+    QSqlDatabase::database().commit();
     QSqlDatabase::database().close();
     m_bConnect = false;
 }
